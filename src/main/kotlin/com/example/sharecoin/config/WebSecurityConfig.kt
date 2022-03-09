@@ -25,7 +25,6 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and()
                 .formLogin()
