@@ -1,44 +1,32 @@
 package com.example.sharecoin.entity
 
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.*
 
 @Entity
 @Table(name = "\"user\"")
-class User: UserDetails {
+class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     var id: Long? = null
 
     @Column(name = "username", nullable = false)
-    private var username: String? = null
+    var username: String? = null
 
     @Column(name = "password", nullable = false)
-    private var password: String? = null
+    var password: String? = null
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    lateinit var roles: MutableCollection<Role>
+    @ManyToMany(mappedBy = "users")
+    var rooms: MutableSet<Room> = mutableSetOf()
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return roles
-    }
+    @OneToMany(mappedBy = "user")
+    var userProducts: MutableSet<UserProduct> = mutableSetOf()
 
-    override fun getPassword(): String = password!!
-    fun setPassword(password: String?){
-        this.password = password
-    }
-
-    override fun getUsername(): String = username!!
-
-    override fun isAccountNonExpired(): Boolean = true
-
-    override fun isAccountNonLocked(): Boolean = true
-
-    override fun isCredentialsNonExpired(): Boolean = true
-
-    override fun isEnabled(): Boolean = true
-
-
+    @ManyToMany
+    @JoinTable(
+        name = "user_role",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "role_id")]
+    )
+    var roles: MutableSet<Role> = mutableSetOf()
 }

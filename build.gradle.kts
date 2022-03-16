@@ -12,7 +12,8 @@ allOpen{
     annotations(
         "javax.persistence.Entity",
         "javax.persistence.MappedSuperclass",
-        "javax.persistence.Embeddable"
+        "javax.persistence.Embeddable",
+        "javax.validation.*"
     )
 }
 
@@ -33,6 +34,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.security:spring-security-oauth2-authorization-server:0.2.2")
+    implementation("javax.validation:validation-api:2.0.1.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
